@@ -1,0 +1,88 @@
+/*
+*  Program 1
+*  This program creates and fills a 2D array, calculates the weight of each cell and displays the weight. 
+*  CS108-2 
+*  1/31/17
+*  @author Daniel Goss sccsxxxx
+*/
+public class weightDIsplay {
+
+	public static void main(String[] args) {
+		
+		System.out.println("@author Daniel Goss sccsxxx");
+		System.out.println();
+		
+		int[][] grid = createGrid(); //Creates and returns a 2d array
+		
+		double [][] weightedTable = new double [grid.length][grid[0].length]; //Creates and returns a second 2d array with the same dimensions as the first
+		
+		int rowNum = 0;
+		int colNum = 0;
+		for (rowNum = 0; rowNum < grid.length; rowNum++) { 
+			/* int minRowVal = grid[rowNum][]; */ 
+			for (colNum = 0; colNum < grid[rowNum].length -1; colNum++) {
+				weightedTable[rowNum][colNum] =  computeWeight(rowNum, colNum, grid); //Calls the computeWeight function through each iteration of the loop to check the weight of each cell in the array, grid.
+			}
+		}
+		
+		for (rowNum = 0; rowNum < grid.length; rowNum++) {
+			for (colNum = 0; colNum < grid[rowNum].length -1; colNum++) {
+				System.out.printf("%10.1f", weightedTable[rowNum][colNum]); //Walks through the loop while imputing, formating and printing values calculated by the computeWeight function through each iteration.
+			}
+			System.out.println();
+		}
+
+	}
+	
+	public static int [][] createGrid() {
+		
+		return new int [][] {
+			{245, 248, 255, 255, 216, 213, 211}, 
+			{245, 158, 158, 158, 101, 100, 85}, 
+			{245, 158, 160, 160, 160, 100, 100},
+			{245, 245, 245, 200, 200, 130, 100},
+			{245, 245, 245, 245, 240, 240, 130}};
+				
+	}
+	
+	public static double computeWeight (int row, int col, int [][] grid) { //Checks if the value in that index of the array is a border or non-border cell, simplifies and returns its weight. 
+		
+		double horWeight = 0;
+		double vertWeight = 0;
+		
+		if (col == 0) {
+			horWeight = grid[row][grid[0].length - 1] - grid[row][col +1]; //Checks if the value is a border column at index 0, wraps around the value at the end of the column and subtracts that number from the value in front of the original index.
+		}
+		
+		else if (col == grid[0].length -1) {
+			horWeight = grid[row][col -1] - grid[row][0]; //Checks if the value is a border column at the last index of the array, wraps around to index 0 and subtracts that number from the value before the original index.
+		}
+		
+		else {
+			horWeight = grid[row][col +1] - grid[row][col -1]; //Checks if the value is a non-border column and takes the values of the columns in front of and before it and subtracts them. 
+		}
+		
+		if (row == 0) {
+			vertWeight = grid[grid.length -1][col] - grid[row +1][col]; //Checks if the value is a border row at index 0, wraps around the value at the bottom of the row and subtracts that number from the value in front of the original index.
+		}
+		
+		else if (row == grid.length -1) {
+			vertWeight = grid[0][col] - grid[row -1][col]; //Checks if the value is a border row at the last index of the array, wraps around to index 0 and subtracts that number from the value before the original index.
+		}
+		
+		else {
+			vertWeight = grid[row +1][col] - grid [row -1][col]; //Checks if the value is a non-border row and takes the numbers in front of and before it and subtracts them. 
+		
+		}
+			horWeight *= horWeight;
+			vertWeight *= vertWeight; 
+		
+		return vertWeight + horWeight;
+	}
+
+	
+}
+
+
+
+
