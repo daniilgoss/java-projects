@@ -1,0 +1,148 @@
+/*
+*  Program 2
+*  This program  
+*  CS108-2 
+*  1/31/17
+*  @author Daniel Goss sccsxxxx
+*/
+public class CellPhone {
+	
+	private String manufact;
+	private String model;
+	private double retailPrice;
+	
+	
+	public CellPhone (String manufact, String model, double retailPrice) {
+		manufact = this.manufact;
+		model = this.model;
+		retailPrice = this.retailPrice;
+			
+	}
+	public void setManufact(String manufact) {
+		
+		manufact = this.manufact;
+	}
+	
+	public void setMod(String model) {
+		
+		model = this.model;
+	}
+	
+	public void setRetailPrice(double retailPrice) {
+		
+		retailPrice = this.retailPrice;
+	}
+	
+	public String getManuFact() {
+		return manufact;
+	}
+	
+	public String getModel() {
+		return model;
+	}
+	
+	public double getRetail() {
+		return retailPrice;
+	}
+	
+}
+
+
+//Driver or client that uses my CellPhone class
+
+
+import java.util.Scanner;
+public class Prog2b {
+
+	public static void main(String[] args) {
+		// Create a Scanner object for keyboard input.
+		Scanner scnr = new Scanner(System.in);
+		
+		// Get the manufacturer name, model number and retail price. 
+		String brand = scnr.nextLine();
+		String mod = scnr.nextLine();
+		Double mSRP = scnr.nextDouble();
+		
+		// Create an instance of the CellPhone class, passing the data that was entered as arguments to the constructor.
+		CellPhone classificator = new CellPhone(brand, mod, mSRP);
+		
+		// Get the data from the phone and display it.
+		System.out.println("Here is the data that you provided:");
+		System.out.println("Manufacturer: " + brand);
+		System.out.println("Model Number: " + mod);
+		System.out.printf("Retail Price: $ " + "%-10.2f", (double)mSRP);
+
+	}
+
+}
+
+
+import java.io.PrintWriter;
+import java.io.File;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+
+public class Prog2c {
+
+	public static void main(String[] args) {
+		
+	File bestPrice = new File ("bestprice.txt");
+	PrintWriter out1 = null;
+	try {
+		out1 = new PrintWriter("bestprice.txt");
+	}
+	catch (FileNotFoundException e) {
+		System.exit(0);
+	}
+		
+	// Create a Scanner object for keyboard input.
+	Scanner scnr = new Scanner(System.in);
+	
+	// Get the manufacturer name, model number and retail price 3 different phones.
+	String brand1 = scnr.nextLine();
+	String model1 = scnr.nextLine();
+	double mSRP1 = scnr.nextDouble();
+	
+	String brand2 = scnr.nextLine();
+	String model2 = scnr.nextLine();
+	double mSRP2 = scnr.nextDouble();
+	
+	String brand3 = scnr.nextLine();
+	String model3 = scnr.nextLine();
+	double mSRP3 = scnr.nextDouble();
+	
+	//Makes 3 instances of the CellPhone class, passing the data that was entered as arguments to the constructor.
+	CellPhone classificator1 = new CellPhone(brand1, model1, mSRP1);
+	
+	CellPhone classificator2 = new CellPhone(brand2, model2, mSRP2);
+	
+	CellPhone classificator3 = new CellPhone(brand3, model3, mSRP3);
+	
+	//Checks the value of each phone and prints the lowest MSRP.
+	System.out.println("The lowest price is: ");
+	out1.println("The lowest price is: ");
+	
+	double lowestMSRP = 0;
+	
+	if (mSRP1 < mSRP2 && mSRP1 < mSRP3) {
+		lowestMSRP = mSRP1;
+		System.out.printf(brand1 + " " + model1 + " for $" + "%-10.2f", (double)lowestMSRP); //out1.print
+		out1.printf(brand1 + " " + model1 + " for $" + "%-10.2f", (double)lowestMSRP); //out1.print
+
+	}
+	else if (mSRP2 < mSRP1 && mSRP2 < mSRP3) {
+		lowestMSRP = mSRP2;
+		System.out.printf(brand2 + " " + model2 + " for $" + "%-10.2f", (double)lowestMSRP);
+		out1.printf(brand2 + " " + model2 + " for $" + "%-10.2f", (double)lowestMSRP);
+
+	}
+	else if (mSRP3 < mSRP1 && mSRP1 < mSRP2) {
+		lowestMSRP = mSRP3;
+		System.out.printf(brand3 + " " + model3 + " for $" + "%-10.2f", (double)lowestMSRP);
+		out1.printf(brand3 + " " + model3 + " for $" + "%-10.2f", (double)lowestMSRP);
+
+	}
+	out1.close();
+	}
+
+}
