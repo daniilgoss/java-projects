@@ -1,0 +1,292 @@
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+
+public class CardCollection {
+
+	public static void main(String[] args) {
+		System.out.println("Program 4, Daniel Goss, cssc0504");
+
+		TradingCard sample = new TradingCard("None", "none", "none.jpg");
+		SportsCard player = new SportsCard("Baseball", "Tony Gwynn", "fixItAgainTony!.jpg", "Padres", "Right fielder", false);
+		SportsCard player2 = new SportsCard("Baseball", "Sammy Sosa", "mcsammington.jpg", "Chicago Cubs", "Outfielder and Right fielder", true);
+		CharacterCard character = new CharacterCard("Pokemon", "MewTwo", "iSeeDouble.jpg", 1000, "Physcic and Hypnosis");
+			
+		sample.print();
+
+		player.print();
+		player.updateName("Jackie Robinson");
+		System.out.println();
+		player.print();
+		player.updatePosition("Batter");
+		System.out.println();
+		player.print();
+		player.updateTeam("The Brooklyn Dodgers");
+		System.out.println();
+		player.print();
+
+		TradingCard card = new SportsCard();
+		printCard(card);
+		System.out.println();
+		TradingCard pokeCard = new CharacterCard();
+		printCard(pokeCard);
+
+		System.out.println();
+
+		character.print();
+		character.printAll();
+		System.out.println();
+		character.updateName("Ho-Ho");
+		character.updateAttribute("Fire");
+		character.print();
+		character.printAll();
+		System.out.println();
+		character.updateName("Milktank");
+		character.updateNumber(300);
+		character.print();
+		character.printAll();
+		System.out.println();
+		character.updateAttribute("Earth");
+		character.updateNumber(528);
+		character.print();
+		character.printAll();
+		
+		System.out.println();
+		
+		player2.print();
+		
+	}
+
+	public static void printCard(TradingCard card) {
+		System.out.println("Printing...");
+		card.print();
+	}
+}
+
+class TradingCard {
+
+	private String game;
+	protected String name;
+	protected String imageFile;
+
+	public TradingCard() {
+		this.game = "";
+		this.name = "";
+		this.imageFile = "";
+	}
+
+	public TradingCard(String game) {
+		this.game = game;
+		this.name = "";
+		this.imageFile = "";
+	}
+
+	/**
+	 * @param game
+	 * @param name
+	 * @param imageFile Passes fields: game, name and imageFile into constructor	
+	 */
+	public TradingCard(String game, String name, String imageFile) {
+		this.game = game;
+		this.name = name;
+		this.imageFile = imageFile;
+	}
+
+	/**
+	 * @param game: encapsulates game
+	 */
+	public void setGame(String game) {
+		this.game = game;
+	}
+
+	/**
+	 * @return returns: game type
+	 *
+	 */
+	public String getGame() {
+		return this.game;
+	}
+
+	/**
+	 * Prints: game type
+	 */
+	public void print() {
+		System.out.println(game);
+		System.out.println();
+
+	}
+}
+
+class SportsCard extends TradingCard {
+	private BufferedImage img = null;
+	private File f = null;
+	private String team = "";
+	private String position = "";
+	private boolean isRookie = true;
+
+	public SportsCard() {
+		super("Baseball");
+	}
+
+	/**
+	 * Constructor. Create a card with given data.
+	 * 
+	 * @see TradingCard
+	 * @param String
+	 *            game game of which this card is a member
+	 * @param String
+	 *            name player name
+	 * @param String
+	 *            team sports team to which player belongs
+	 * @param String
+	 *            position field position (e.g. catcher, pitcher, outfielder)
+	 * @param boolean
+	 *            isRookie true if card is the player's rookie season card
+	 */
+	public SportsCard(String game, String name, String imageFile, String team, String position, boolean isRookie) {
+		super(game, name, imageFile);
+		this.setImage(imageFile);
+		this.updateTeam(team);
+		this.updatePosition(position);
+		this.updateisRookie(isRookie);
+	}
+
+	public void updateName(String name) {
+		/**
+		 * Update name
+		 * 
+		 * @param String
+		 *       name of sports figure
+		 */
+		this.name = name;
+	}
+
+	public void setImage(String imageFile) {
+		try {
+			f = new File(imageFile);
+			img = ImageIO.read(f);
+		} catch (IOException e) {
+			System.out.println("Error: " + e);
+		}
+	}
+
+	public void updateTeam(String team) {
+		/**
+		 * Update name
+		 * 
+		 * @param String
+		 *            name of sports figure
+		 */
+		this.team = team;
+	}
+
+	public void updatePosition(String position) {
+		this.position = position;
+
+	}
+
+	public void updateisRookie(boolean isRookie) {
+		this.isRookie = isRookie;
+
+	}
+
+	public void print() {
+		/**
+		 * Overrides TradingCard.print() to output game: name as a position with
+		 * the team
+		 */
+		System.out.println(super.getGame() + ": " + this.name + " as a " + this.position + " with the " + this.team);
+	}
+}
+
+/**
+ * Constructor. Create a blank card where game defaults to "Pokemon"
+ */
+class CharacterCard extends TradingCard {
+	private int number;
+	private String attribute;
+	private BufferedImage img = null;
+	private File f = null;
+
+	/**
+	 * Constructor. Create a card with given data.
+	 * 
+	 * @see TradingCard Calls super(game, name, imageFile)
+	 * @param String
+	 *            game game of which this card is a member
+	 * @param String
+	 *            name character name
+	 * @param String
+	 *            imageFile file name containing image of character
+	 * @param int
+	 *            number series number
+	 * @param String
+	 *            attribute description of character attributes
+	 */
+	public CharacterCard() {
+		super("Pokemon");
+	}
+
+	public CharacterCard(String game, String name, String imageFile, int number, String attribute) {
+		super(game, name, imageFile);
+		this.updateName(name);
+		this.setImage(imageFile);
+		this.updateNumber(number);
+		this.updateAttribute(attribute);
+
+	}
+
+	public void updateName(String name) {
+		/**
+		 * Update name
+		 * 
+		 * @param String
+		 *            name name of character
+		 */
+		this.name = name;
+	}
+
+	public void setImage(String imageFile) {
+		try {
+			f = new File(imageFile);
+			img = ImageIO.read(f);
+		} catch (IOException e) {
+			System.out.println("Error: " + e);
+		}
+	}
+
+	public void updateNumber(int number) {
+		/**
+		 * Update name
+		 * 
+		 * @param String
+		 *            name name of character
+		 */
+		this.number = number;
+	}
+
+	public void updateAttribute(String attribute) {
+		this.attribute = attribute;
+
+	}
+
+	@Override
+	public void print() {
+		/**
+		 * Overrides TradingCard.print() to output game: name
+		 */
+		System.out.println(super.getGame() + ": " + this.name);
+
+	}
+
+	public void printAll() {
+		/**
+		 * Displays game: name HP number Powers: attribute newline
+		 */
+		System.out.println(super.getGame() + ": " + this.name);
+		System.out.println("HP: " + this.number);
+		System.out.println("Powers: " + this.attribute);
+	}
+
+}
