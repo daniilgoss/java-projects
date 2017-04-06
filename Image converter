@@ -1,0 +1,47 @@
+import java.io.IOException;
+import java.util.Scanner;
+/*
+*  Program 3
+*  
+*  CS108-2 
+*  2/27/17
+*  @author Daniel Goss cssc0504
+*/
+public class Prog3b {
+
+	public static void main (String[] args) {
+		Scanner scan = new Scanner(System.in);
+		ImageConverter ic = new ImageConverter();
+		 int x=30,y=30; // test pixel values
+
+		String fileName = scan.next();
+		System.out.println(fileName);
+		 ic.readImage(fileName);
+		 ic.test(x, y);
+		 ic.toGrayscale();
+		 ic.test(x, y);
+		 ic.writeImage();
+
+		 // TODO: Re-read in image, convert to Red; repeat for Green and Blue
+		 ic.readImage(fileName);
+		 ic.test(x, y);
+		 ic.toRed();
+		 ic.test(x, y);
+		 ic.writeImage();
+		 
+		 ic.readImage(fileName);
+		 ic.test(x, y);
+		 ic.toGreen();
+		 ic.test(x, y);
+		 ic.writeImage();
+		 
+		 ic.readImage(fileName);
+		 ic.test(x, y);
+		 ic.toBlue();
+		 ic.test(x, y);
+		 ic.writeImage();
+		 
+		 scan.close();
+
+	}
+}
